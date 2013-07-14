@@ -10,8 +10,12 @@ import com.cdi.genericdao.qualifier.Dao;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import javax.annotation.Resource;
+import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.enterprise.context.Dependent;
+import javax.enterprise.context.spi.Context;
+import javax.enterprise.context.spi.Contextual;
 import javax.enterprise.context.spi.CreationalContext;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.Bean;
@@ -30,18 +34,22 @@ public class DaoProducer implements Serializable {
     private static final long serialVersionUID = 1L;
     @PersistenceContext
     EntityManager em;
+    
+    @Resource
+    SessionContext sc;
 
     @Produces
     @Dependent
     @Dao
     public <ID, T extends BaseEntity<ID>> BaseDao<T, ID> produce(InjectionPoint ip, BeanManager bm) {
         if (ip.getAnnotated().isAnnotationPresent(Dao.class)) {
-            BaseDao<T, ID> genericDao = (BaseDao<T, ID>) this.getBeanByName("baseDao", bm);
+//            BaseDao<T, ID> genericDao = (BaseDao<T, ID>) sc.lookup("java:global/cdi-dao/BaseDao");//works on JBossAS
+            BaseDao<T, ID> genericDao = (BaseDao<T, ID>)  this.getBeanByName("baseDao", bm);
             ParameterizedType type = (ParameterizedType) ip.getType();
             Type[] typeArgs = type.getActualTypeArguments();
             Class<T> entityClass = (Class<T>) typeArgs[0];
             genericDao.setEntityClass(entityClass);
-            genericDao.setEntityManager(em);
+//            genericDao.setEntityManager(em);
             return genericDao;
         }
         throw new IllegalArgumentException("Annotation @Dao is required when injecting BaseDao");
