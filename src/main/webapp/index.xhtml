@@ -29,7 +29,7 @@
                 <p:column headerText="Id" >
                     #{p.id}
                 </p:column>
-                <p:column headerText="Name" sortBy="#{p.name}" filterBy="#{p.name}" filterMatchMode="contains">
+                <p:column headerText="Name" sortBy="#{p.name}" >
                     #{p.name}
                 </p:column>
                 <p:column headerText="Age" sortBy="#{p.age}">
@@ -46,7 +46,7 @@
                 <f:facet name="header">
                     Car List
                 </f:facet>
-                <p:column headerText="Model" sortBy="#{c.model}" filterBy="#{c.model}" filterMatchMode="contains">
+                <p:column headerText="Model" sortBy="#{c.model}" >
                     #{c.model}
                 </p:column>
                 <p:column headerText="Price" sortBy="#{c.price}">

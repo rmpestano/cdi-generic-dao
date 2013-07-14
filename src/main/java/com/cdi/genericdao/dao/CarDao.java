@@ -13,5 +13,5 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class CarDao extends BaseDao<Car, Integer>{
-    //put here specific person business
+    //put here specific car business
 }

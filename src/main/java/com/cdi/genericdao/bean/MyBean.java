@@ -39,10 +39,10 @@ public class MyBean implements Serializable{
     
     @PostConstruct
     public void init(){
-        if(personDao.findAll().isEmpty()){
+        if(genericPersonDao.findAll().isEmpty()){
             for (int i = 0; i < 10; i++) {
                 Person p = new Person("Person"+i, i);
-                personDao.insert(p);
+                genericPersonDao.insert(p);
             }
         }
         
