@@ -14,7 +14,7 @@ import javax.persistence.Entity;
 public class Car extends BaseEntity<Integer>{
     
     private String model;
-    private double price;
+    private Double price;
 
     public Car() {
     }
@@ -34,11 +34,11 @@ public class Car extends BaseEntity<Integer>{
         this.model = model;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
     

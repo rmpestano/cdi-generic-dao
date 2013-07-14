@@ -6,16 +6,18 @@ package com.cdi.genericdao.bean;
 
 import com.cdi.genericdao.dao.BaseDao;
 import com.cdi.genericdao.dao.CarDao;
-import com.cdi.genericdao.dao.PersonDao;
 import com.cdi.genericdao.model.Car;
-import com.cdi.genericdao.model.Person;
 import com.cdi.genericdao.qualifier.Dao;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.apache.myfaces.extensions.cdi.core.api.scope.conversation.ViewAccessScoped;
+import org.primefaces.event.SelectEvent;
+import org.primefaces.event.UnselectEvent;
 
 /**
  *
@@ -25,42 +27,37 @@ import org.apache.myfaces.extensions.cdi.core.api.scope.conversation.ViewAccessS
 @ViewAccessScoped
 public class MyBean implements Serializable{
     
-    private List<Person> personList;
     private List<Car> carList;
+    private List<Car> filteredValue;//datatable filteredValue attribute
     private Long id;
-    private Person person;
+    private Car car;
     
     @Inject CarDao carDao;
     
-    @Inject PersonDao personDao;
-    
     @Inject @Dao 
-    BaseDao<Person,Long> genericPersonDao;
+    BaseDao<Car,Integer> genericDao;
+//    @Inject @Dao 
+//    BaseDao<Person,Long> genericDao;
+//    @Inject @Dao 
+//    BaseDao<Client,IDClass> genericDao;
     
     @PostConstruct
     public void init(){
-        if(genericPersonDao.findAll().isEmpty()){
-            for (int i = 0; i < 10; i++) {
-                Person p = new Person("Person"+i, i);
-                genericPersonDao.insert(p);//need to be transactional
-            }
-        }
-        
-         if(carDao.findAll().isEmpty()){
+        if(genericDao.findAll().isEmpty()){
             for (int i = 0; i < 10; i++) {
                 Car c = new Car("Car"+i, i);
-                carDao.insert(c);
+                genericDao.insert(c);
             }
         }
+        //same as above
+//         if(carDao.findAll().isEmpty()){
+//            for (int i = 0; i < 10; i++) {
+//                Car c = new Car("Car"+i, i);
+//                carDao.insert(c);
+//            }
+//        }
         
         
-    }
-    
-    public List<Person> getPersonList(){
-        if(personList == null){
-            personList = genericPersonDao.findAll();
-        }
-        return personList;
     }
     
     public List<Car> getCarList(){
@@ -78,36 +75,54 @@ public class MyBean implements Serializable{
         this.id = id;
     }
 
-    public Person getPerson() {
-        if(person == null){
-            person = new Person();
+    public Car getCar() {
+        if(car == null){
+            car = new Car();
         }
-        return person;
+        return car;
     }
 
-    public void setPerson(Person person) {
-        this.person = person;
+    public void setCar(Car car) {
+        this.car = car;
     }
     
     
-    public void findPersonById(Long id){
-         person = genericPersonDao.find(id);
+    public void findCarById(Integer id){
+         car = genericDao.find(id);
+    }
+
+    public List<Car> getFilteredValue() {
+        return filteredValue;
+    }
+
+    public void setFilteredValue(List<Car> filteredValue) {
+        this.filteredValue = filteredValue;
     }
     
     public void update(){
-        if(person.getId() == null){
-             genericPersonDao.insert(person);  
+        String msg;
+        if(car.getId() == null){
+             genericDao.insert(car);  
+             msg = "Car "+car.getModel() +" created successfully";
         }
         else{
-           genericPersonDao.update(person);  
+           genericDao.update(car); 
+           msg = "Car "+car.getModel() +" updated successfully";
         }
-       
-        personList = null;//reload person list
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(msg));
+        clear();//reload car list
     }
     
     public void clear(){
-        person = new Person();
-        personList = null;
+        car = new Car();
+        carList = null;
     }
+    
+    public void onRowSelect(SelectEvent event) {  
+        setCar(genericDao.find(((Car) event.getObject()).getId()));  
+    }  
            
+    public void onRowUnselect(UnselectEvent event) {  
+        car = new Car();
+    }  
 }
