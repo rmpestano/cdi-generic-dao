@@ -29,7 +29,7 @@ public class CarBean implements Serializable{
     
     private List<Car> carList;
     private List<Car> filteredValue;//datatable filteredValue attribute
-    private Long id;
+    private Integer id;
     private Car car;
     
     @Inject CarDao carDao;
@@ -44,7 +44,7 @@ public class CarBean implements Serializable{
     @PostConstruct
     public void init(){
         if(genericDao.findAll().isEmpty()){
-            for (int i = 0; i < 10; i++) {
+            for (int i = 1; i < 10; i++) {
                 Car c = new Car("Car"+i, i);
                 genericDao.insert(c);
             }
@@ -67,11 +67,11 @@ public class CarBean implements Serializable{
         return carList;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -99,6 +99,14 @@ public class CarBean implements Serializable{
         this.filteredValue = filteredValue;
     }
     
+    public void remove(){
+        if(car != null && car.getId() != null){
+            genericDao.delete(car.getId());
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Car "+car.getModel() +" removed successfully"));
+            clear();
+        }
+    }
+    
     public void update(){
         String msg;
         if(car.getId() == null){
@@ -119,8 +127,9 @@ public class CarBean implements Serializable{
         id = null;
     }
     
-    public void onRowSelect(SelectEvent event) {  
-        setCar(genericDao.find(((Car) event.getObject()).getId()));  
+    public void onRowSelect(SelectEvent event) {
+        setId(((Car) event.getObject()).getId());
+        findCarById(getId());  
     }  
            
     public void onRowUnselect(UnselectEvent event) {  

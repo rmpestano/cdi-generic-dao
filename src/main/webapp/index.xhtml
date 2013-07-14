@@ -52,6 +52,7 @@
                     <h:outputLabel value="Age:" for="age"/>
                     <p:inputText id="age" value="#{carBean.car.price}"/>
                     <p:commandButton value="Save/Update" action="#{carBean.update}" process="@form" update="@form"/>
+                    <p:commandButton value="Delete" action="#{carBean.remove}" process="@form" update="@form"/>
                     <p:commandButton value="Clear" action="#{carBean.clear}" process="@form" update="@form"/>
                 </h:panelGrid>
 
