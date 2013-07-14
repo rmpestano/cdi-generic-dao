@@ -25,7 +25,7 @@ import org.primefaces.event.UnselectEvent;
  */
 @Named
 @ViewAccessScoped
-public class MyBean implements Serializable{
+public class CarBean implements Serializable{
     
     private List<Car> carList;
     private List<Car> filteredValue;//datatable filteredValue attribute
@@ -116,6 +116,7 @@ public class MyBean implements Serializable{
     public void clear(){
         car = new Car();
         carList = null;
+        id = null;
     }
     
     public void onRowSelect(SelectEvent event) {  

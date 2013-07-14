@@ -9,7 +9,6 @@
         <provider>${application.jta-provider}</provider>
         <jta-data-source>${application.jta-data-source}</jta-data-source>
         <class>com.cdi.genericdao.model.Car</class>
-        <class>com.cdi.genericdao.model.Person</class>
         <properties>
             <property name="${application.table-generation-name}" value="${application.table-generation-value}" />
         </properties>
