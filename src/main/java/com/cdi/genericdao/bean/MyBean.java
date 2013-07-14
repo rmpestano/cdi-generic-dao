@@ -104,4 +104,10 @@ public class MyBean implements Serializable{
        
         personList = null;//reload person list
     }
+    
+    public void clear(){
+        person = new Person();
+        personList = null;
+    }
+           
 }

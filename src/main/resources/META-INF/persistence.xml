@@ -6,7 +6,7 @@
              version="1.0">
 	 
     <persistence-unit name="PU" transaction-type="JTA">
-        <!--<provider>${application.jta-provider}</provider>-->
+        <provider>${application.jta-provider}</provider>
         <jta-data-source>${application.jta-data-source}</jta-data-source>
         <class>com.cdi.genericdao.model.Car</class>
         <class>com.cdi.genericdao.model.Person</class>

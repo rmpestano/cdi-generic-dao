@@ -64,8 +64,10 @@
                 <p:inputText id="name" value="#{myBean.person.name}"/>
                 <h:outputLabel value="Age:" for="age"/>
                 <p:inputText id="age" value="#{myBean.person.age}"/>
+                 <p:commandButton value="Save/Update" action="#{myBean.update}" process="@form" update="@form"/>
+                 <p:commandButton value="Clear" action="#{myBean.clear}" process="@form" update="@form"/>
             </h:panelGrid>
-            <p:commandButton value="Save/Update" action="#{myBean.update}" process="@form" update="@form"/>
+           
         </h:form>
     </h:body>
 

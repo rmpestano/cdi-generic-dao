@@ -100,7 +100,7 @@
             <properties>
                 <application.jta-data-source>jdbc/__default</application.jta-data-source>
                 <application.table-generation-name>eclipselink.ddl-generation</application.table-generation-name>
-                <application.table-generation-value>create-tables</application.table-generation-value>
+                <application.table-generation-value>drop-and-create-tables</application.table-generation-value>
                 <application.jta-provider>org.eclipse.persistence.jpa.PersistenceProvider</application.jta-provider>
             </properties>
             <activation>
