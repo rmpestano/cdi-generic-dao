@@ -8,20 +8,16 @@ import com.cdi.genericdao.model.BaseEntity;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
-import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 
 /**
  *
  * @author rmpestano
  */
-public class BaseDao<T extends BaseEntity<ID>, ID extends Serializable> implements Serializable {
+public class BaseDao<T extends BaseEntity<ID>, ID> implements Serializable {
 
     @PersistenceContext
     private EntityManager entityManager;

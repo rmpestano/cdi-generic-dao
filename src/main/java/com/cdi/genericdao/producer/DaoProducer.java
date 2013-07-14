@@ -10,6 +10,7 @@ import com.cdi.genericdao.qualifier.Dao;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import javax.ejb.Stateless;
 import javax.enterprise.context.Dependent;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
@@ -20,6 +21,7 @@ import javax.persistence.PersistenceContext;
  *
  * @author rmpestano
  */
+@Stateless
 public class DaoProducer implements Serializable{
     private static final long serialVersionUID = 1L;
 	
@@ -28,12 +30,12 @@ public class DaoProducer implements Serializable{
 	EntityManager em;
 	
 	 @Produces @Dependent @Dao
-	 public <ID extends Serializable, T extends BaseEntity<ID>>BaseDao<T,ID> produce(InjectionPoint ip){
+	 public <ID, T extends BaseEntity<ID>> BaseDao<T,ID> produce(InjectionPoint ip){
 		 if(ip.getAnnotated().isAnnotationPresent(Dao.class)){
 			 BaseDao<T, ID> genericDao = new BaseDao<T,ID>();
 			 ParameterizedType type = (ParameterizedType) ip.getType();         
 			 Type[] typeArgs = type.getActualTypeArguments();        
-			 Class<T> entityClass = (Class<T>) typeArgs[1];
+			 Class<T> entityClass = (Class<T>) typeArgs[0];
 			 genericDao.setEntityClass(entityClass);
 			 genericDao.setEntityManager(em);
 			 return genericDao;

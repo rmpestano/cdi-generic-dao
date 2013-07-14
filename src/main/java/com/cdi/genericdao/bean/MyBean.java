@@ -9,27 +9,33 @@ import com.cdi.genericdao.dao.CarDao;
 import com.cdi.genericdao.dao.PersonDao;
 import com.cdi.genericdao.model.Car;
 import com.cdi.genericdao.model.Person;
+import com.cdi.genericdao.qualifier.Dao;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.enterprise.inject.Model;
 import javax.inject.Inject;
+import javax.inject.Named;
+import org.apache.myfaces.extensions.cdi.core.api.scope.conversation.ViewAccessScoped;
 
 /**
  *
  * @author rmpestano
  */
-@Model
+@Named
+@ViewAccessScoped
 public class MyBean implements Serializable{
     
     private List<Person> personList;
     private List<Car> carList;
+    private Long id;
+    private Person person;
     
     @Inject CarDao carDao;
     
     @Inject PersonDao personDao;
     
-    @Inject BaseDao<Person,Long> genericPersonDao;
+    @Inject @Dao 
+    BaseDao<Person,Long> genericPersonDao;
     
     @PostConstruct
     public void init(){
@@ -63,4 +69,26 @@ public class MyBean implements Serializable{
         }
         return carList;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+    
+    
+    public void findPersonById(Long id){
+         person = genericPersonDao.find(id);
+    }
+    
 }

@@ -14,6 +14,7 @@
         </style>
     </h:head>
     <h:body style="">
+        <h:form>
         <h:panelGrid columns="2" >
             <p:dataTable var="p" value="#{myBean.personList}" rows="5" 
                          rowKey="#{p.id}"  paginator="true"
@@ -25,10 +26,13 @@
                 <f:facet name="header">
                     Person List
                 </f:facet>
-                <p:column headerText="Name" >
+                <p:column headerText="Id" >
+                    #{p.id}
+                </p:column>
+                <p:column headerText="Name" sortBy="#{p.name}" filterBy="#{p.name}">
                     #{p.name}
                 </p:column>
-                <p:column headerText="Age" >
+                <p:column headerText="Age" sortBy="#{p.age}">
                     #{p.age}
                 </p:column>
             </p:dataTable>
@@ -42,15 +46,21 @@
                 <f:facet name="header">
                     Car List
                 </f:facet>
-                <p:column headerText="Model" >
+                <p:column headerText="Model" sortBy="#{c.model}">
                     #{c.model}
                 </p:column>
-                <p:column headerText="Price" >
+                <p:column headerText="Price" sortBy="#{c.price}">
                     #{c.price}
                 </p:column>
             </p:dataTable>
         </h:panelGrid>
-
+        <p>
+            Find person by id:<p:inputText value="#{myBean.id}"/> <p:commandButton value="Find" action="#{myBean.findPersonById(myBean.id)}" process="@form" update="@form" partialSubmit="true"/>
+        </p>
+        <p>
+            <h:outputText id="person" value="Person: #{myBean.person.name}"/>
+        </p>
+     </h:form>
     </h:body>
 
 </html>
