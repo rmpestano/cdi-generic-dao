@@ -59,7 +59,7 @@ public class DaoProducer implements Serializable {
 
         Bean bean = bm.getBeans(name).iterator().next();
         CreationalContext ctx = bm.createCreationalContext(bean); // could be inlined below
-        Object o = bm.getReference(bean, bean.getClass(), ctx); // could be inlined with return
+        Object o = bm.getReference(bean, bean.getBeanClass(), ctx); // could be inlined with return
         return o;
     }
 }
