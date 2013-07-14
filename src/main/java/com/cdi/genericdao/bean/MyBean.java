@@ -42,7 +42,7 @@ public class MyBean implements Serializable{
         if(genericPersonDao.findAll().isEmpty()){
             for (int i = 0; i < 10; i++) {
                 Person p = new Person("Person"+i, i);
-                genericPersonDao.insert(p);
+                genericPersonDao.insert(p);//need to be transactional
             }
         }
         
@@ -79,6 +79,9 @@ public class MyBean implements Serializable{
     }
 
     public Person getPerson() {
+        if(person == null){
+            person = new Person();
+        }
         return person;
     }
 
@@ -91,4 +94,14 @@ public class MyBean implements Serializable{
          person = genericPersonDao.find(id);
     }
     
+    public void update(){
+        if(person.getId() == null){
+             genericPersonDao.insert(person);  
+        }
+        else{
+           genericPersonDao.update(person);  
+        }
+       
+        personList = null;//reload person list
+    }
 }

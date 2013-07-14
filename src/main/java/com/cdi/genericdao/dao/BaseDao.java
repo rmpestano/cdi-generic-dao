@@ -8,8 +8,11 @@ import com.cdi.genericdao.model.BaseEntity;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
+import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -17,6 +20,8 @@ import javax.persistence.PersistenceContext;
  *
  * @author rmpestano
  */
+@Stateless
+@Named("baseDao")
 public class BaseDao<T extends BaseEntity<ID>, ID> implements Serializable {
 
     @PersistenceContext
