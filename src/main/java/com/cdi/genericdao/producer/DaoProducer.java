@@ -28,15 +28,9 @@ import javax.persistence.PersistenceContext;
  *
  * @author rmpestano
  */
-@Stateless
 public class DaoProducer implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @PersistenceContext
-    EntityManager em;
-    
-    @Resource
-    SessionContext sc;
 
     @Produces
     @Dependent
@@ -56,8 +50,14 @@ public class DaoProducer implements Serializable {
     }
 
     public Object getBeanByName(String name, BeanManager bm) { // eg. name=availableCountryDao{
-
         Bean bean = bm.getBeans(name).iterator().next();
+        CreationalContext ctx = bm.createCreationalContext(bean); // could be inlined below
+        Object o = bm.getReference(bean, bean.getBeanClass(), ctx); // could be inlined with return
+        return o;
+    }
+    
+      public static Object getBeanByType(Type t, BeanManager bm){ // eg. name=availableCountryDao
+        Bean bean = bm.getBeans(t).iterator().next();
         CreationalContext ctx = bm.createCreationalContext(bean); // could be inlined below
         Object o = bm.getReference(bean, bean.getBeanClass(), ctx); // could be inlined with return
         return o;
