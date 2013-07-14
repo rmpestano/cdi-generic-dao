@@ -1,0 +1,35 @@
+10
+
+dir
+0
+http://svn.apache.org/repos/asf/openwebbeans/trunk/samples/jsf2sample/cdi-generic-dao
+http://svn.apache.org/repos/asf
+add
+
+
+
+
+
+has-props
+has-prop-mods
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+13f79535-47bb-0310-9956-ffa450edef68
+
+src
+dir
+
+
+
+add
+

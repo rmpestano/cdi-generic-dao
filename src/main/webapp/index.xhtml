@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui" 
+      >
+
+    <h:head>
+        <title>Generic CDI Dao</title>
+        <style type="text/css">
+            .ui-widget {
+                font-size: 12px !important;
+            }
+        </style>
+    </h:head>
+    <h:body style="">
+        <h:panelGrid columns="2" >
+            <p:dataTable var="p" value="#{myBean.personList}" rows="5" 
+                         rowKey="#{p.id}"  paginator="true"
+                         paginatorPosition="bottom"
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {JumpToPageDropdown}"
+                         currentPageReportTemplate="[ Showing {startRecord} to {endRecord} Total {totalRecords} - Page: {currentPage}/{totalPages} ]"    
+                         rowsPerPageTemplate="5,10,15,20,30"
+                         >
+                <f:facet name="header">
+                    Person List
+                </f:facet>
+                <p:column headerText="Name" >
+                    #{p.name}
+                </p:column>
+                <p:column headerText="Age" >
+                    #{p.age}
+                </p:column>
+            </p:dataTable>
+            <p:dataTable var="c" value="#{myBean.carList}" rows="5" 
+                         rowKey="#{c.id}"  paginator="true"
+                         paginatorPosition="bottom"
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {JumpToPageDropdown}"
+                         currentPageReportTemplate="[ Showing {startRecord} to {endRecord} Total {totalRecords} - Page: {currentPage}/{totalPages} ]"    
+                         rowsPerPageTemplate="5,10,15,20,30"
+                         >
+                <f:facet name="header">
+                    Car List
+                </f:facet>
+                <p:column headerText="Model" >
+                    #{c.model}
+                </p:column>
+                <p:column headerText="Price" >
+                    #{c.price}
+                </p:column>
+            </p:dataTable>
+        </h:panelGrid>
+
+    </h:body>
+
+</html>
