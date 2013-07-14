@@ -35,7 +35,7 @@ public class CarBean implements Serializable{
     @Inject CarDao carDao;
     
     @Inject @Dao 
-    BaseDao<Car,Integer> genericDao;
+    BaseDao<Car,Integer> genericDao;//reuse generic dao for basic crud operation in various entities
 //    @Inject @Dao 
 //    BaseDao<Person,Long> genericDao;
 //    @Inject @Dao 

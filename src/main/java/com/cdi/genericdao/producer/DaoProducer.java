@@ -44,7 +44,7 @@ public class DaoProducer implements Serializable {
     public <ID, T extends BaseEntity<ID>> BaseDao<T, ID> produce(InjectionPoint ip, BeanManager bm) {
         if (ip.getAnnotated().isAnnotationPresent(Dao.class)) {
 //            BaseDao<T, ID> genericDao = (BaseDao<T, ID>) sc.lookup("java:global/cdi-dao/BaseDao");//works on JBossAS
-            BaseDao<T, ID> genericDao = (BaseDao<T, ID>)  this.getBeanByName("baseDao", bm);//works with weld 1.1.8, error with Weld 1.1.13
+            BaseDao<T, ID> genericDao = (BaseDao<T, ID>)  this.getBeanByName("baseDao", bm);
             ParameterizedType type = (ParameterizedType) ip.getType();
             Type[] typeArgs = type.getActualTypeArguments();
             Class<T> entityClass = (Class<T>) typeArgs[0];
