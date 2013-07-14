@@ -47,9 +47,9 @@
 
             <p:fieldset legend="Manage Cars">
                 <h:panelGrid columns="2" id="grid">
-                    <h:outputLabel value="Name:" for="name"/>
+                    <h:outputLabel value="Model:" for="name"/>
                     <p:inputText id="name" value="#{carBean.car.model}"/>
-                    <h:outputLabel value="Age:" for="age"/>
+                    <h:outputLabel value="Price:" for="age"/>
                     <p:inputText id="age" value="#{carBean.car.price}"/>
                     <p:commandButton value="Save/Update" action="#{carBean.update}" process="@form" update="@form"/>
                     <p:commandButton value="Delete" action="#{carBean.remove}" process="@form" update="@form"/>
