@@ -4,6 +4,8 @@
  */
 package com.cdi.genericdao.model;
 
+import java.io.Serializable;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,7 +16,7 @@ import javax.persistence.MappedSuperclass;
  * @author rmpestano
  */
 @MappedSuperclass
-public abstract class BaseEntity<ID> {
+public abstract class BaseEntity<ID> implements Serializable{
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

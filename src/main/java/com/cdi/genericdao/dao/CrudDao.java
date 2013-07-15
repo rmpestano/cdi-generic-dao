@@ -6,6 +6,8 @@ package com.cdi.genericdao.dao;
 
 import com.cdi.genericdao.dao.BaseDao;
 import com.cdi.genericdao.model.BaseEntity;
+
+import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import javax.inject.Inject;
@@ -17,12 +19,12 @@ import javax.persistence.EntityManager;
  * @author rafael-pestano
  */
 @Named("crudDao")
-public class CrudDao<T extends BaseEntity<ID>, ID> {
+public class CrudDao<T extends BaseEntity<ID>, ID> implements Serializable{
     
     @Inject
-    BaseDao<T,ID> dao;
+    protected BaseDao<T,ID> dao;
     
-    Class<T> entityClass;
+    protected Class<T> entityClass;
     
    public Class<T> getEntityClass() {
         if (entityClass == null) {
@@ -41,11 +43,11 @@ public class CrudDao<T extends BaseEntity<ID>, ID> {
     }
     
     public T find(ID id){
-        return dao.find(id, entityClass);
+        return dao.find(id, getEntityClass());
     }
     
     public void delete(ID id){
-         dao.delete(id, entityClass);
+         dao.delete(id, getEntityClass());
     }
     
     public T update(T t){
@@ -57,7 +59,7 @@ public class CrudDao<T extends BaseEntity<ID>, ID> {
     }
     
     public List<T> findAll(){
-        return dao.findAll(entityClass);
+        return dao.findAll(getEntityClass());
     }
     
     public List<T> findWithNamedQuery(String namedQueryName){
