@@ -4,9 +4,10 @@
  */
 package com.cdi.genericdao.bean;
 
-import com.cdi.genericdao.dao.BaseDao;
+import com.cdi.genericdao.dao.CrudDao;
 import com.cdi.genericdao.dao.CarDao;
 import com.cdi.genericdao.model.Car;
+import com.cdi.genericdao.model.Movie;
 import com.cdi.genericdao.qualifier.Dao;
 import java.io.Serializable;
 import java.util.List;
@@ -35,7 +36,10 @@ public class CarBean implements Serializable{
     @Inject CarDao carDao;
     
     @Inject @Dao 
-    BaseDao<Car,Integer> genericDao;//reuse generic dao for basic crud operation in various entities
+    CrudDao<Car,Integer> genericDao;//reuse generic dao for basic crud operation in various entities
+    
+    @Inject @Dao 
+    CrudDao<Movie,Long> genericDao2;//reuse generic dao for basic crud operation in various entities
 //    @Inject @Dao 
 //    BaseDao<Person,Long> genericDao;
 //    @Inject @Dao 

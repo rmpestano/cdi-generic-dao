@@ -6,9 +6,7 @@ package com.cdi.genericdao.dao;
 
 import com.cdi.genericdao.model.BaseEntity;
 import java.io.Serializable;
-import java.lang.reflect.ParameterizedType;
 import java.util.List;
-import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -26,7 +24,6 @@ public class BaseDao<T extends BaseEntity<ID>, ID> implements Serializable {
 
     @PersistenceContext
     private EntityManager entityManager;
-    private Class<T> entityClass;
 
     public EntityManager getEntityManager() {
         return entityManager;
@@ -36,26 +33,15 @@ public class BaseDao<T extends BaseEntity<ID>, ID> implements Serializable {
         this.entityManager = entityManager;
     }
 
-    public Class<T> getEntityClass() {
-        if (entityClass == null) {
-            //only works if one extends BaseDao, we will take care of it with CDI
-            entityClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-        }
-        return entityClass;
-    }
-
-    public void setEntityClass(Class<T> entityClass) {
-        this.entityClass = entityClass;
-    }
-
+    
     //utility database methods
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public T find(ID id) {
-        return (T) this.entityManager.find(getEntityClass(), id);
+    public T find(ID id, Class<T> type) {
+        return (T) this.entityManager.find(type, id);
     }
 
-    public void delete(ID id) {
-        Object ref = this.entityManager.getReference(getEntityClass(), id);
+    public void delete(ID id, Class<T> type) {
+        Object ref = this.entityManager.getReference(type, id);
         this.entityManager.remove(ref);
     }
 
@@ -68,8 +54,8 @@ public class BaseDao<T extends BaseEntity<ID>, ID> implements Serializable {
     }
 
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public List<T> findAll() {
-        return entityManager.createQuery("Select entity FROM "+getEntityClass().getSimpleName() +" entity").getResultList();
+    public List<T> findAll(Class<T> type) {
+        return entityManager.createQuery("Select entity FROM "+type.getSimpleName() +" entity").getResultList();
     } 
 
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)

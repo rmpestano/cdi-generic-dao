@@ -12,6 +12,6 @@ import javax.ejb.Stateless;
  * @author rmpestano
  */
 @Stateless
-public class CarDao extends BaseDao<Car, Integer>{
+public class CarDao extends CrudDao<Car, Integer>{
     //put here specific car business
 }
