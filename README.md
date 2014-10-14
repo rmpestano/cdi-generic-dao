@@ -1,3 +1,5 @@
+new/updated version in http://github.com/rmpestano/cdi-crud 
+
 How run it:
 
 1 - choose the maven profile(glassfish{default} or jboss)
